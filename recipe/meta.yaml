@@ -1,5 +1,5 @@
 {% set name = "libxc" %}
-{% set version = "7.0.0" %}
+{% set version = "7.1.1" %}
 {% set cuda_compiler_version = cuda_compiler_version or "None" %}
 {% set proc_type = "cuda_" if cuda_compiler_version != "None" else "cpu_" %}
 
@@ -14,10 +14,10 @@ source:
     - 0002-treat-pylibxc-as-independent-project.patch
     # incorporated into v7.0.0 - 0003-cmake-cuda.patch
     - 0004-windows-interface-include-fix.patch
-  sha256: e9ae69f8966d8de6b7585abd9fab588794ada1fab8f689337959a35abbf9527d
+  sha256: 0e913232757338f345830250bf344d8c60feca5b8ff6c0c6b2229c5189eea11f
 
 build:
-  number: 6
+  number: 0
   skip: true  # [not linux and cuda_compiler_version != "None"]
 
 requirements:
