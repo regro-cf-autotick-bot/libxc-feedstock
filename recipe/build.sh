@@ -17,13 +17,13 @@ if [[ ! -z "${cuda_compiler_version+x}" && "${cuda_compiler_version}" != "None" 
 
     NVCFLAGS+=" -O3 -std=c++17 --compiler-options ${CXXFLAGS// /,}"
     ENABLE_CUDA=ON
-    DERIV=2
+    DERIV=4
 elif [[ "$target_platform" == "linux-aarch64" ]]; then
     ENABLE_CUDA=OFF
-    DERIV=3
+    DERIV=4
 else
     ENABLE_CUDA=OFF
-    DERIV=4e
+    DERIV=4
 fi
 
 if [ "$(uname)" == "Darwin" ]; then
@@ -58,8 +58,8 @@ if [ ${target_platform} == "linux-ppc64le" ]; then
     -DENABLE_FORTRAN=${ENABLE_FORTRAN} \
     -DENABLE_CUDA=${ENABLE_CUDA} \
     -DENABLE_XHOST=OFF \
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.10 \
-    -DBUILD_TESTING=ON
+    -DBUILD_TESTING=ON \
+    -DMAXORDER=${DERIV}
 else
   export CMAKE_BUILD_PARALLEL_LEVEL=2
   ${BUILD_PREFIX}/bin/cmake ${CMAKE_ARGS} \
@@ -80,8 +80,7 @@ else
     -DENABLE_CUDA=${ENABLE_CUDA} \
     -DENABLE_XHOST=OFF \
     -DBUILD_TESTING=ON \
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.10 \
-    -DLIBXC_ENABLE_DERIV=${DERIV}
+    -DMAXORDER=${DERIV}
 fi
 
 cmake --build build --target install
